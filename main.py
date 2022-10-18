@@ -35,12 +35,8 @@ def make_json_response(json_str: str, status: int):
 @app.route('/cards/<number>', methods=['GET'])
 def process_cards_request(number: str):
     bin = ensure_and_get_bin(number)
-    print("BIN: ", bin)
     if bin is None:
-        print("EMPTY BIN")
         return make_json_response({"data": "Wrong number format"}, 500)
-
-    print('NON EMPTY BIN')
 
     info = cards_info.get_info_json_by_bin(bin)
     info_json = json.loads(info)
@@ -54,4 +50,4 @@ def process_cards_request(number: str):
 
 if __name__ == '__main__':
     cards_info = BanksInfo(filename)
-    app.run(HOST, PORT, debug=True)
+    app.run(HOST, PORT)
