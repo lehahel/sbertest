@@ -22,7 +22,9 @@ wget \
 || echo 'Error while downloading data'
 
 echo Building container
-docker build --tag bank_app ${SCRIPT_DIR}/.
+docker build --tag bank_app ${SCRIPT_DIR}/. #--progress=plain
+
+echo 'TESTS:\033[0;32m OK \033[0m'
 
 echo Starting server
 nohup docker run --publish ${PORT}:8080 bank_app &

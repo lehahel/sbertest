@@ -14,7 +14,7 @@ filename = args['file']
 
 app = flask.Flask("Sber Test Server")
 
-class CardsInfo:
+class BanksInfo:
     def __init__(self, filename: str):
         self.table = pd.read_csv(filename)
 
@@ -46,11 +46,12 @@ def process_cards_request(number: str):
     info_json = json.loads(info)
     if len(info_json) == 0:
         return flask.Response(json.dumps({}), status=200, mimetype='application/json')
-
     result = info_json[0]
+    del result['index']
+    del result['bin']
     return flask.Response(json.dumps(result), status=200, mimetype='application/json')
 
 
 if __name__ == '__main__':
-    cards_info = CardsInfo(filename)
+    cards_info = BanksInfo(filename)
     app.run(HOST, PORT, debug=True)
